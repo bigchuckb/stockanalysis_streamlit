@@ -6,18 +6,18 @@ import csv
 ## sudo code ##
     # 1. gather list of tickers and display as a filter (Complete)
     # 2. set other parameters (amount to buy, % of trade offs, etc.) (Complete)
-    # 3. show reccomendation for today's purchase
-    # 4. show graph of backtesting
+    # 3. show reccomendation for today's purchase (Complete)
+    # 4. Enable multiple stock selections
 
 filename = 'nasdaq_screener_1609165990883.csv'
 
 df = pd.read_csv(filename)
 
 stocks = st.sidebar.selectbox('Select Your Investment:',df['Symbol'].tolist())
-time_period = st.sidebar.slider('Maximum Historical Look Back (Months):',min_value=1, max_value=24)
+time_period = st.sidebar.slider('Maximum Historical Look Back (Months):',min_value=1, max_value=48)
 ten_percent = st.sidebar.number_input('Amount to invest if stock is 0 - 10 percent below the high:')
 twenty_percent = st.sidebar.number_input('Amount to invest if stock is 10 - 20 percent below the high:')
-thirty_percent = st.sidebar.number_input('Amount to invest if stock is 20 - 30 percent below the high:')
+thirty_percent = st.sidebar.number_input('Amount to invest if stock is 20+ percent below the high:')
 
 run = st.sidebar.button("Run")
 
@@ -39,7 +39,6 @@ if run:
 
     st.write(f"Investment Reccomendation: ${round(suggestion,2)} in {stocks}.")
     st.line_chart(hist.drop(['Volume', 'Stock Splits', 'Dividends','Close','Open','Low'], axis=1))
-    st.success('Success!')
 else:
     st.title("Welcome!")
     st.write("Choose a stock to analyze on the left.")
